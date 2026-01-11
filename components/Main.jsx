@@ -4,9 +4,8 @@ export default function Main(){
     const [ingredients, setIngredients] = React.useState([])
     const ingredientsList = ingredients.map((ingredient,index)=><li key={index}>{ingredient}</li>)
 
-function handleSubmit(e) {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+function handleSubmit(formData) {
+ 
     const newIngredient = formData.get("ingredient")
     if (newIngredient) {
         document.getElementById("form").reset()
@@ -15,7 +14,7 @@ function handleSubmit(e) {
 }
     return (
         <main>
-            <form id="form" className="add-ingredient-form" onSubmit={handleSubmit}>
+            <form id="form" className="add-ingredient-form" action={handleSubmit}>
                 <input 
                 id="ingredient"
                 type="text"
