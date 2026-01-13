@@ -1,8 +1,12 @@
 import React from "react"
+import ClaudeRecipe from "./ClaudeRecipe"
+import IngredientsList from "./IngredientsList"
 export default function Main(){
+    const HF_API_KEY = import.meta.env.VITE_HF_API_KEY
 
     const [ingredients, setIngredients] = React.useState([])
-    const ingredientsList = ingredients.map((ingredient,index)=><li key={index}>{ingredient}</li>)
+    
+    const [recipeShown, setRecipeShown] = React.useState(false)
 
 function handleSubmit(formData) {
  
@@ -12,6 +16,11 @@ function handleSubmit(formData) {
     setIngredients(prevIngredients=>[...prevIngredients,newIngredient])
     }
 }
+
+function toggleRecipeShown() {
+    setRecipeShown(prev=>!prev)
+}
+
     return (
         <main>
             <form id="form" className="add-ingredient-form" action={handleSubmit}>
@@ -23,10 +32,9 @@ function handleSubmit(formData) {
                 name="ingredient"/>
                 <button>Add ingredient</button>
             </form>
-            <ul>
-                {ingredientsList}
-            </ul>
-
+            {ingredients.length > 0 && <IngredientsList toggleRecipeShown={toggleRecipeShown} ingredients={ingredients}  />}
+            {recipeShown && <ClaudeRecipe />}
         </main>
     )
 }
+
