@@ -1,6 +1,7 @@
 {
   "name": "project",
   "dependencies": {
+    "@huggingface/inference": "^4.13.7",
     "dotenv": "^17.2.3",
     "react": "19.0.0-rc-8b08e99e-20240713",
     "react-dom": "19.0.0-rc-8b08e99e-20240713"

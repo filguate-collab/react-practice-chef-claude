@@ -1,12 +1,18 @@
 import React from "react"
 import ClaudeRecipe from "./ClaudeRecipe"
 import IngredientsList from "./IngredientsList"
+import { getRecipeFromHuggingFace } from "../api/huggingface"
+
+
+
 export default function Main(){
     const HF_API_KEY = import.meta.env.VITE_HF_API_KEY
 
     const [ingredients, setIngredients] = React.useState([])
     
     const [recipeShown, setRecipeShown] = React.useState(false)
+    const [recipe, setRecipe] = React.useState("")
+
 
 function handleSubmit(formData) {
  
@@ -17,9 +23,12 @@ function handleSubmit(formData) {
     }
 }
 
-function toggleRecipeShown() {
-    setRecipeShown(prev=>!prev)
+async function toggleRecipeShown() {
+    setRecipeShown(true)
+    const recipeFromAI = await getRecipeFromHuggingFace(ingredients)
+    setRecipe(recipeFromAI)
 }
+
 
     return (
         <main>
@@ -33,7 +42,8 @@ function toggleRecipeShown() {
                 <button>Add ingredient</button>
             </form>
             {ingredients.length > 0 && <IngredientsList toggleRecipeShown={toggleRecipeShown} ingredients={ingredients}  />}
-            {recipeShown && <ClaudeRecipe />}
+            {recipeShown && <ClaudeRecipe recipe={recipe} />}
+
         </main>
     )
 }
